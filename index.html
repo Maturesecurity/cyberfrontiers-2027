@@ -29,8 +29,7 @@ h1{font-size:clamp(48px,8vw,88px);line-height:.92;margin:16px 0 24px;letter-spac
 .card{background:#ffffff08;border:1px solid #ffffff12;border-radius:18px;padding:22px}.card b{display:block;font-size:14px;color:var(--accent);margin-bottom:9px}.card p{margin:0;color:var(--muted);line-height:1.5}
 section{margin-top:65px}.section-title{font-size:30px;margin-bottom:18px}
 .agenda{display:grid;grid-template-columns:110px 1fr;gap:0;border-top:1px solid #ffffff18}.row{display:contents}.time,.event{padding:17px 0;border-bottom:1px solid #ffffff18}.time{color:var(--accent);font-weight:700}.event strong{display:block;margin-bottom:5px}.event span{color:var(--muted)}
-.bottom{display:grid;grid-template-columns:1fr 280px;gap:30px;align-items:start}
-.qrbox{background:white;border-radius:20px;padding:18px;text-align:center;color:#07111f}.qrbox img{width:210px;max-width:100%}.qrbox small{display:block;margin-top:10px}
+.bottom{display:grid;grid-template-columns:1fr;gap:30px;align-items:start;max-width:720px}
 footer{margin-top:65px;color:#71849c;font-size:13px;border-top:1px solid #ffffff12;padding-top:20px}
 
 /* ==== FORM ==== */
@@ -142,7 +141,7 @@ footer{margin-top:65px;color:#71849c;font-size:13px;border-top:1px solid #ffffff
   <div class="form-row">
     <div class="form-group">
       <label for="company">Company / University</label>
-      <input type="text" id="company" name="company" placeholder="MTUCI" required>
+      <input type="text" id="company" name="company" placeholder="Company" required>
     </div>
     <div class="form-group">
       <label for="phone">Phone Number</label>
@@ -161,12 +160,6 @@ footer{margin-top:65px;color:#71849c;font-size:13px;border-top:1px solid #ffffff
 </form>
 
 <p style="color:#71849c;font-size:13px;margin-top:14px">Free attendance for students · Limited places · English working language</p>
-</div>
-
-<div class="qrbox">
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://maturesecurity.github.io/cyberfrontiers-2027/" alt="QR code to conference page">
-  <strong>SCAN TO VISIT</strong>
-  <small>Scan to visit the official conference page</small>
 </div>
 </div>
 </section>
@@ -208,7 +201,7 @@ footer{margin-top:65px;color:#71849c;font-size:13px;border-top:1px solid #ffffff
 
     if (!valid) return;
 
-    // Здесь можно собрать данные (для будущей отправки на сервер)
+    // Собираем данные (готово к отправке на сервер)
     const data = {
       firstName: document.getElementById('firstName').value.trim(),
       lastName:  document.getElementById('lastName').value.trim(),
