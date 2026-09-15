@@ -22,17 +22,41 @@ nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:
 .kicker{color:var(--accent);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
 h1{font-size:clamp(48px,8vw,88px);line-height:.92;margin:16px 0 24px;letter-spacing:-.055em}
 .lead{font-size:20px;line-height:1.55;color:var(--muted);max-width:690px}
-.cta{display:inline-block;margin-top:25px;padding:15px 22px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101d;text-decoration:none;font-weight:800}
+.cta{display:inline-block;margin-top:25px;padding:15px 22px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101d;text-decoration:none;font-weight:800;border:none;cursor:pointer;font-size:16px}
 .poster{background:linear-gradient(145deg,#122a45,#0b1728);border:1px solid #ffffff18;border-radius:28px;padding:28px;box-shadow:0 30px 80px #0006}
 .poster .big{font-size:72px;font-weight:900;line-height:.8;margin:18px 0;color:var(--accent)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:55px}
 .card{background:#ffffff08;border:1px solid #ffffff12;border-radius:18px;padding:22px}.card b{display:block;font-size:14px;color:var(--accent);margin-bottom:9px}.card p{margin:0;color:var(--muted);line-height:1.5}
 section{margin-top:65px}.section-title{font-size:30px;margin-bottom:18px}
 .agenda{display:grid;grid-template-columns:110px 1fr;gap:0;border-top:1px solid #ffffff18}.row{display:contents}.time,.event{padding:17px 0;border-bottom:1px solid #ffffff18}.time{color:var(--accent);font-weight:700}.event strong{display:block;margin-bottom:5px}.event span{color:var(--muted)}
-.bottom{display:grid;grid-template-columns:1fr 280px;gap:30px;align-items:center}
+.bottom{display:grid;grid-template-columns:1fr 280px;gap:30px;align-items:start}
 .qrbox{background:white;border-radius:20px;padding:18px;text-align:center;color:#07111f}.qrbox img{width:210px;max-width:100%}.qrbox small{display:block;margin-top:10px}
 footer{margin-top:65px;color:#71849c;font-size:13px;border-top:1px solid #ffffff12;padding-top:20px}
-@media(max-width:760px){.hero,.bottom{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.poster{margin-top:10px}}
+
+/* ==== FORM ==== */
+.form-card{background:#ffffff08;border:1px solid #ffffff12;border-radius:18px;padding:26px;margin-top:20px}
+.form-card h3{margin:0 0 6px;font-size:20px}
+.form-card p.hint{margin:0 0 20px;color:var(--muted);font-size:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-group{display:flex;flex-direction:column}
+.form-group label{font-size:13px;color:var(--muted);margin-bottom:6px;letter-spacing:.03em}
+.form-group input{background:#0a1626;border:1px solid #ffffff20;border-radius:10px;padding:12px 14px;color:var(--text);font-size:15px;outline:none;transition:.2s}
+.form-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #6ee7ff33}
+.form-group input::placeholder{color:#5b6c82}
+.form-card .cta{width:100%;margin-top:10px}
+
+/* ==== MODAL ==== */
+.modal-overlay{display:none;position:fixed;inset:0;background:#000000b3;backdrop-filter:blur(6px);z-index:999;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.active{display:flex;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:linear-gradient(145deg,#122a45,#0b1728);border:1px solid #ffffff22;border-radius:22px;padding:38px 32px;max-width:480px;width:100%;text-align:center;box-shadow:0 30px 90px #000a;animation:popIn .3s ease}
+@keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal .check{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;color:#06101d;font-weight:900}
+.modal h3{margin:0 0 14px;font-size:24px;letter-spacing:-.02em}
+.modal p{margin:0 0 24px;color:var(--muted);line-height:1.6}
+.modal .cta{margin-top:0}
+
+@media(max-width:760px){.hero,.bottom{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.poster{margin-top:10px}.form-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -97,12 +121,49 @@ footer{margin-top:65px;color:#71849c;font-size:13px;border-top:1px solid #ffffff
 <div class="bottom">
 <div>
 <h2 class="section-title">Ready to join?</h2>
-<p class="lead" style="font-size:17px">Registration is open for researchers, students, IT specialists and cybersecurity professionals. Choose your presentation format and become part of the global conversation.</p>
-<a class="cta" href="https://maturesecurity.github.io/cyberfrontiers-2027/">Register for CyberFrontiers 2027 →</a>
-<p style="color:#71849c;font-size:13px">Free attendance for students · Limited places · English working language</p>
+<p class="lead" style="font-size:17px">Registration is open for researchers, students, IT specialists and cybersecurity professionals. Fill in the form below and become part of the global conversation.</p>
+
+<!-- ===== REGISTRATION FORM ===== -->
+<form class="form-card" id="registrationForm" novalidate>
+  <h3>Registration Form</h3>
+  <p class="hint">All fields are required. We will contact you shortly after submission.</p>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" placeholder="John" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="company">Company / University</label>
+      <input type="text" id="company" name="company" placeholder="MTUCI" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="+7 900 000 00 00" required>
+    </div>
+  </div>
+
+  <div class="form-row" style="grid-template-columns:1fr">
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="john.doe@example.com" required>
+    </div>
+  </div>
+
+  <button type="submit" class="cta">Submit Application →</button>
+</form>
+
+<p style="color:#71849c;font-size:13px;margin-top:14px">Free attendance for students · Limited places · English working language</p>
 </div>
+
 <div class="qrbox">
-  <!-- Автоматическая генерация QR-кода для вашей ссылки -->
   <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://maturesecurity.github.io/cyberfrontiers-2027/" alt="QR code to conference page">
   <strong>SCAN TO VISIT</strong>
   <small>Scan to visit the official conference page</small>
@@ -112,5 +173,63 @@ footer{margin-top:65px;color:#71849c;font-size:13px;border-top:1px solid #ffffff
 
 <footer>CYBERFRONTIERS 2027 · International Conference on Cybersecurity & Digital Trust · Berlin · Designed & developed by Kirill Korneev · 2026</footer>
 </div>
+
+<!-- ===== THANK YOU MODAL ===== -->
+<div class="modal-overlay" id="thankYouModal">
+  <div class="modal">
+    <div class="check">✓</div>
+    <h3>Thank You!</h3>
+    <p>Your application has been accepted!<br>We will contact you shortly.<br>Have a great day!</p>
+    <button type="button" class="cta" id="closeModal">Close</button>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('registrationForm');
+  const modal = document.getElementById('thankYouModal');
+  const closeBtn = document.getElementById('closeModal');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // не перезагружаем страницу
+
+    // Проверка заполнения всех полей
+    const fields = ['firstName', 'lastName', 'company', 'phone', 'email'];
+    let valid = true;
+
+    fields.forEach(id => {
+      const input = document.getElementById(id);
+      if (!input.value.trim()) {
+        input.style.borderColor = '#ff5c7a';
+        valid = false;
+      } else {
+        input.style.borderColor = '#ffffff20';
+      }
+    });
+
+    if (!valid) return;
+
+    // Здесь можно собрать данные (для будущей отправки на сервер)
+    const data = {
+      firstName: document.getElementById('firstName').value.trim(),
+      lastName:  document.getElementById('lastName').value.trim(),
+      company:   document.getElementById('company').value.trim(),
+      phone:     document.getElementById('phone').value.trim(),
+      email:     document.getElementById('email').value.trim()
+    };
+    console.log('Form submitted:', data);
+
+    // Показываем модальное окно
+    modal.classList.add('active');
+
+    // Очищаем форму
+    form.reset();
+  });
+
+  // Закрыть модальное окно
+  closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+</script>
 </body>
 </html>
